@@ -1,21 +1,15 @@
-# alfred 2 Simple Workflow
-
-	author		gavinczhang
-	email		gavin6487@gmail.com
-	copyright	GPL
-
-## hosts switch
+# hosts switch
 
 	用于简单管理本机hosts
 
-### 分组解释
+## 分组解释
 
 	您可以将常用的几个host映射关系保存为一个分组,方便进行切换
 	也可以在每次需要的时候单独添加/删除
 
 	第一次使用时,从您本机的/etc/hosts文件中读取的内容,自动保存为default分组
 
-### 1. 设置本机root密码
+## 1. 设置本机root密码
 
 	由于修改本机hosts需要管理员权限,因此需要先存储root密码,该密码存储与您本机的keychain中
 	命令:
@@ -24,7 +18,7 @@
 	-p		设置密码命令
 	pwd		密码
 
-### 2. 增加一条映射关系
+## 2. 增加一条映射关系
 
 	命令:
 	hosts -a 127.0.0.1 www.qq.com work
@@ -34,7 +28,7 @@
 	host	需要映射的地址
 	group	分组,可选参数
 
-### 3. 删除一条映射关系
+## 3. 删除一条映射关系
 
 	命令:
 	hosts -d www.qq.com work
@@ -43,24 +37,9 @@
 	host	需要删除的地址
 	group	从哪个分组中删除,可选参数
 
-### 4. 切换分组
+## 4. 切换分组
 
 	命令:
 	hosts work
 	参数说明
 	group	需要切换到的分组
-
-## todo list
-	简单的todo list
-
-### 1. 新增
-
-	命令:
-	todo 框架选型 挑选主流框架,输出框架性能评测和安装,使用的复杂性评测
-	参数说明:
-	title	标题
-	desc	描述,可选参数
-
-### 2. 完成
-
-	输入todo后,系统会默认输出当前待办事项,选中敲回车即可
