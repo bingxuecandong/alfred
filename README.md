@@ -2,7 +2,6 @@
 
 	author		gavinczhang
 	email		gavin6487@gmail.com
-	copyright	GPL
 
 ## hosts switch
 
