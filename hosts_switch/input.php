@@ -43,6 +43,10 @@ class Input
 					//设置密码
 					$this->password();
 					break;
+				case '-l':
+					//查看group下hosts列表
+					$this->group_list();
+					break;
 				default:
 					//切换分组
 					$this->change();
@@ -114,6 +118,17 @@ class Input
 			'icon'			=> 'images/del.png',
 		];
 
+		//list
+		$this->data[] = [
+			'uid'			=> ++$this->uid,
+			'valid'			=> 'no',
+			'autocomplete'	=> '-l ',
+			'arg'			=> '',
+			'title'			=> 'hosts -l group',
+			'subtitle'		=> '显示某分组下所有host映射',
+			'icon'			=> 'images/list.png',
+		];
+
 		//password
 		$this->data[] = [
 			'uid'			=> ++$this->uid,
@@ -124,6 +139,76 @@ class Input
 			'subtitle'		=> '由于修改hosts操作需要root权限,请提供root密码,密码将直接保存在您本机的keychain中',
 			'icon'			=> 'images/key.png',
 		];
+
+		$this->to_xml();
+	}
+
+	public function group_list()
+	{
+		$param = explode(' ', $this->string);
+		$count = count($param);
+		if ($count == 1)
+		{
+			//只有-l
+			$this->data[] = [
+				'uid'			=> ++$this->uid,
+				'valid'			=> 'no',
+				'autocomplete'	=> '-l ',
+				'arg'			=> '',
+				'title'			=> 'hosts -l group',
+				'subtitle'		=> '显示group分组下所有host映射',
+				'icon'			=> 'images/list.png',
+			];
+		}
+		else
+		{
+			//判断现有哪个分组里存在当前host
+			if ($count == 2 || $count == 3)
+			{
+				//获取当前有多少分组
+				$host_list = Hosts_Switch::instance()->group_host_list($param[1]);
+				foreach ($host_list as $data)
+				{
+					if (($count == 3 && strpos($data['host'], $param[2]) !== FALSE) || $count == 2)
+					{
+						$this->data[] = [
+							'uid'			=> ++$this->uid,
+							'valid'			=> 'no',
+							'autocomplete'	=> '',
+							'arg'			=> '',
+							'title'			=> $data['ip'].'    '.$data['host'],
+							'subtitle'		=> $data['group'],
+							'icon'			=> 'images/icon.png',
+						];
+					}
+				}
+
+				if (empty($this->data))
+				{
+					$this->data[] = [
+						'uid'			=> ++$this->uid,
+						'valid'			=> 'no',
+						'autocomplete'	=> '',
+						'arg'			=> '',
+						'title'			=> $param[1].'分组不存在',
+						'subtitle'		=> '',
+						'icon'			=> 'images/sorry.png',
+					];
+				}
+			}
+			else
+			{
+				$this->data[] = [
+					'uid'			=> ++$this->uid,
+					'valid'			=> 'no',
+					'autocomplete'	=> '',
+					'arg'			=> '',
+					'title'			=> 'hosts -l group',
+					'subtitle'		=> '无法识别您输入的含义',
+					'icon'			=> 'images/sorry.png',
+				];
+			}
+		}
 
 		$this->to_xml();
 	}
@@ -214,7 +299,7 @@ class Input
 						'arg'			=> '',
 						'title'			=> 'hosts -a ip host group',
 						'subtitle'		=> '无法识别您输入的含义',
-						'icon'			=> 'images/add.png',
+						'icon'			=> 'images/sorry.png',
 					];
 				}
 			}
@@ -281,7 +366,7 @@ class Input
 					'arg'			=> '',
 					'title'			=> 'hosts -d host group',
 					'subtitle'		=> '未找到您要删除的host',
-					'icon'			=> 'images/add.png',
+					'icon'			=> 'images/sorry.png',
 				];
 			}
 		}

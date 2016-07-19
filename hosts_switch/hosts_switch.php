@@ -6,6 +6,21 @@ define('HOSTS', '/etc/hosts');
 class Hosts_Switch
 {
 	//文件内容
+	/**
+	 * @var $data array
+	 * $data = [
+	 * 		'md5'	=> 'abc',
+	 * 		'group'	=> 'default',
+	 * 		'hosts'	=> [
+	 * 			'default'	=> [
+	 * 				'www.qq.com'	=> '1.1.1.1',
+	 * 			],
+	 * 			'work'		=> [
+	 * 				'www.qq.com'	=> '2.2.2.2',
+	 * 			],
+	 * 		],
+	 * ];
+	 */
 	public $data = [];
 	//hosts文件md5
 	public $md5 = '';
@@ -172,6 +187,28 @@ class Hosts_Switch
 			else
 			{
 				$data[$group_name] = count($hosts);
+			}
+		}
+
+		return $data;
+	}
+
+	//获取某分组下所有hosts列表
+	public function group_host_list($group)
+	{
+		$data = [];
+		foreach ($this->data['hosts'] as $group_name => $hosts)
+		{
+			if (strpos($group_name, $group) !== FALSE)
+			{
+				foreach ($hosts as $host => $ip)
+				{
+					$data[] = [
+						'group'	=> $group_name,
+						'host'	=> $host,
+						'ip'	=> $ip,
+					];
+				}
 			}
 		}
 

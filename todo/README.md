@@ -1,6 +1,7 @@
 # todo list
 
 	存储于本机的一款简单todo list工具
+	全局快捷键 ctrl+command+t
 
 ## 1. 新增
 

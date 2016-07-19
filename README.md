@@ -6,6 +6,7 @@
 ## hosts switch
 
 	用于简单管理本机hosts
+	全局快捷键 ctrl+command+h
 
 ### 分组解释
 
@@ -48,6 +49,15 @@
 	hosts work
 	参数说明
 	group	需要切换到的分组
+
+### 5. 显示某分组下所有host映射
+
+	命令:
+	hosts -l group host
+	参数说明
+	-l		显示hosts列表命令
+	group	要显示某个分组下的hosts
+	host	带此关键字的host列表,可选参数
 
 ## todo list
 	简单的todo list
